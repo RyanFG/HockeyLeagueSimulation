@@ -4,7 +4,8 @@ CREATE DATABASE hockey_simulation;
 
 CREATE TABLE world_file(
     file_id SERIAL PRIMARY KEY,
-    file_name VARCHAR(50)
+    file_name VARCHAR(50),
+    active Not NULL boolean
 );
 
 CREATE TABLE League(
