@@ -5,18 +5,23 @@ import Col from 'react-bootstrap/Col';
 
 function Home(){
     return(
-        <Col className="down1 text-center">    
-            <div>
-                Welcome To Hockey League Simulation
-            </div>
-
-            <Button href="/Creation" variant="primary" size="lg">
-                Create Simulation                        
-            </Button>
-            <Button href="/SaveFiles" variant="primary" size="lg">
-                Load Simulation                        
-            </Button>
-        </Col>
+        <Row>
+            <Col className="down5 text-center" style={{position:'absolute', fontSize:'275%', fontFamily:'Rockwell'}}>    
+                <div>
+                    Welcome To Hockey League Simulation
+                </div>
+                <div>
+                    <Button href="/Creation" variant="primary" size="lg">
+                        Create Simulation                        
+                    </Button>
+                </div>
+                <div style={{paddingTop:'1%'}}>
+                    <Button href="/SaveFiles" variant="primary" size="lg">
+                        Load Simulation                        
+                    </Button>
+                </div>    
+            </Col>
+        </Row>
     );
 }
 

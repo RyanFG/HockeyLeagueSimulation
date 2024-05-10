@@ -59,6 +59,7 @@ CREATE TABLE Player (
     DraftPickNum int,
     contractYears int,
     contractSalary int,
+    retired boolean
 );
 
 CREATE TABLE Conference (

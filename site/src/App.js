@@ -1,8 +1,9 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from './components/pages/Home';
 import Creation from './components/pages/Creation';
-import Files from './components/pages/SaveFiles';
+import SaveFiles from './components/pages/SaveFiles';
 
 function App() {
   return (
