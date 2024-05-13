@@ -9,16 +9,22 @@ app.use(express.json());
 
 //Routes (Queries, look at previous db to know more)
 //Create
-app.post("/world_files", async(req,res) => {
+app.post("/createFile", async(req,res) => {
     try{
-
-        const {top_league,num_leagues} = req.body;
+        console.log("Creation Started");
+        const {file_name,league_name,lg_abbrv,numConf,numDiv,teamPerDiv} = req.body;
         const newFile = await pool.query(
-            "INSERT INTO world_files (topLeague,num_leagues) VALUES($1)",
-            [top_league,num_leagues]
+            "INSERT INTO world_file (file_name,active,file_date) VALUES ($1,True,'2024-09-01')",
+            [file_name,league_name,lg_abbrv,parseInt(numConf),parseInt(numDiv),parseInt(numConf)*parseInt(numDiv)*parseInt(teamPerDiv)]
+        );
+        console.log("File Created");
+        const newLeague = await pool.query(
+            "INSERT INTO League (file_name,leagueName,LeagueAbrv,DivsPerConf,numConferences,numTeams,) VALUES ($1,$2,$3,$5,$4,$6)",
+            [file_name,league_name,lg_abbrv,parseInt(numConf),parseInt(numDiv),parseInt(numConf)*parseInt(numDiv)*parseInt(teamPerDiv)]
         );
 
         res.json(newFile.rows[0]);
+        res.json(newLeague.rows[0]);
 
     }catch(err){
         console.error(err.message);
@@ -31,6 +37,6 @@ app.post("/world_files", async(req,res) => {
 //Delete
 
 
-app.listen(5000, () => {
-    console.log("Server started on port 5000")
+app.listen(3001, () => {
+    console.log("Server started on port 3001")
 });

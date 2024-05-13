@@ -5,9 +5,39 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 function Creation(){
+    
+    const fileCreate = async(event) => {
+        console.log("here");
+        event.preventDefeault();
+
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+
+        console.log("started");
+
+        try{
+            const response = await fetch('http://localhost:3001/createFile', {
+                method: 'POST',
+                headers:{'Content-Type': 'application/json'},
+                body: JSON.stringify(data),
+            });
+            if(response.ok){
+                const newFile = await response.json();
+                console.log('New File:', newFile);
+            }else{
+                console.log("failed1");
+                console.error('Failed ot create file:', response.statusText);
+            }
+        }catch(error){
+            console.log("failed2");
+            console.error('Error creating file:', error.message);
+        }
+        
+    };
+    
     return(
         
-        <Form style={{fontFamily:'Rockwell'}}>
+        <Form style={{fontFamily:'Rockwell'}} onSubmit={fileCreate}>
             <Col className="down3 text-center" style={{fontSize:'275%'}}>    
                 Setup Your Simulation
             </Col>
@@ -66,7 +96,7 @@ function Creation(){
             </Row>
 
             <Row className="down3" xs={6} style={{paddingLeft:'10%',fontSize:'125%'}}>
-                <Button href="/Creation" variant="success" size="lg">
+                <Button variant="success" size="lg">
                     Submit                        
                 </Button>
             </Row>
