@@ -31,6 +31,19 @@ app.post("/createFile", async(req,res) => {
     }
 });
 //Get
+app.get("/getFiles", async(req,res) => {
+    try{
+        const files = await pool.query(
+            "SELECT * FROM world_file"
+        );
+
+        res.json(files.rows);
+    }catch(error){
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+
+});
 
 //Update
 

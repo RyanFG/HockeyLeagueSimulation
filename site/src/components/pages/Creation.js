@@ -7,15 +7,14 @@ import Col from 'react-bootstrap/Col';
 function Creation(){
     
     const fileCreate = async(event) => {
-        console.log("here");
-        event.preventDefeault();
-
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData.entries());
-
-        console.log("started");
-
         try{
+            console.log("here");
+            event.preventDefault()
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            console.log(data);
+
+        
             const response = await fetch('http://localhost:3001/createFile', {
                 method: 'POST',
                 headers:{'Content-Type': 'application/json'},
@@ -96,7 +95,7 @@ function Creation(){
             </Row>
 
             <Row className="down3" xs={6} style={{paddingLeft:'10%',fontSize:'125%'}}>
-                <Button variant="success" size="lg">
+                <Button type="submit" variant="success" size="lg">
                     Submit                        
                 </Button>
             </Row>
