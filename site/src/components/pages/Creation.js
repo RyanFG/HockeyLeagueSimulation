@@ -6,12 +6,18 @@ import Col from 'react-bootstrap/Col';
 
 function Creation(){
     
-    const fileCreate = async(event) => {
+    const fileCreate = async(e) => {
         try{
-            console.log("here");
-            event.preventDefault()
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData.entries());
+            console.log(e.target.fileName.value);
+            e.preventDefault()
+            const data = {
+                file_name: e.target.fileName.value,
+                league_name:e.target.leagueName.value,
+                lg_abrv: e.target.leagueAbrv.value,
+                numConf: e.target.numConf.value,
+                numDiv: e.target.numDiv.value,
+                teamPerDiv: e.target.teamPerDiv.value
+            };
             console.log(data);
 
         
@@ -44,7 +50,7 @@ function Creation(){
             <Row>
                 <Col xs={4} style={{paddingLeft:'10%',fontSize:'125%'}}>
                     <Form.Label>File Name</Form.Label>
-                    <Form.Control placeholder="Enter File Name"/>
+                    <Form.Control type="text" name="fileName" placeholder="Enter File Name"/>
                 </Col>
             </Row>
 
@@ -55,25 +61,25 @@ function Creation(){
             <Row style={{fontSize:'125%',paddingTop:'1%'}}>
                 <Col xs={4} style={{paddingLeft:'10%'}}>
                     <Form.Label>League Name</Form.Label>
-                    <Form.Control placeholder="Enter League Name"/>
+                    <Form.Control  type="text" name="leagueName" placeholder="Enter League Name"/>
                 </Col>
                 <Col xs={2}>
                     <Form.Label>League Abbreaviation</Form.Label>
-                    <Form.Control placeholder="Enter Abbreaviation"/>
+                    <Form.Control  type="text" name="leagueAbrv" placeholder="Enter Abbreaviation"/>
                 </Col>
             </Row>
 
             <Row style={{fontSize:'125%',paddingTop:'1%'}}>
                 <Col xs={4} style={{paddingLeft:'10%'}}>
                     <Form.Label>Number of Conferences</Form.Label>
-                    <Form.Select aria-label="Select Value">
+                    <Form.Select  type="text" name="numConf" aria-label="Select Value">
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </Form.Select>
                 </Col>
                 <Col xs={3}>
                     <Form.Label>Number of Divisions Per Conference</Form.Label>
-                    <Form.Select aria-label="Select Value">
+                    <Form.Select  type="text" name="numDiv" aria-label="Select Value">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -81,7 +87,7 @@ function Creation(){
                 </Col>
                 <Col xs={3}>
                     <Form.Label>Number of Teams Per Division</Form.Label>
-                    <Form.Select aria-label="Select Value">
+                    <Form.Select  type="text" name="teamPerDiv" aria-label="Select Value">
                         <option value="1">3</option>
                         <option value="2">4</option>
                         <option value="3">5</option>

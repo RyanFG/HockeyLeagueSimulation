@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 function GameHome(){
     return(
         <Row>
-            <Col className="down5 text-center" style={{position:'absolute', fontSize:'275%', fontFamily:'Rockwell'}}>    
+            <Col className="down3 text-center" style={{position:'absolute', fontSize:'275%', fontFamily:'Rockwell'}}>    
                 <div>
                     Simulation Homescreen
                 </div>  

@@ -17,11 +17,11 @@ function SaveFiles(){
     const showFiles = (files) => {
         return (<tr>
             <th scope="row">{files.file_name}</th>
-            <td>{files.file_date}</td>
+            <td>{files.file_date.slice(0,10)}</td>
             <Button
                 onClick={() => updateFile(files.active)}
                 variant="primary"
-                href="/game_home"
+                href="/gameHome"
             >
                 SELECT FILE
             </Button>
@@ -33,7 +33,7 @@ function SaveFiles(){
             const response = await fetch(`http://localhost:3001/world_files/${file_active}`,{
                 method:'PUT',
                 headers:{'Content-Type':'application/json',},
-                body: JSON.strongify({}),
+                body: JSON.stringify({}),
             });
 
             if (response.ok) {
