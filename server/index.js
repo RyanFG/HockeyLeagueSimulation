@@ -11,14 +11,13 @@ app.use(express.json());
 //Create
 app.post("/createFile", async(req,res) => {
     try{
-        console.log("Creation Started");
-        console.log(req.body);
-        const {file_name,league_name,lg_abbrv,numConf,numDiv,teamPerDiv} = req.body;
-        const newFile = await pool.query(
-            "INSERT INTO world_file (file_name,active,file_date) VALUES ($1,True,'2024-09-01')",
-            [file_name]
-        );
-        console.log("File Created");
+        const {file_name,league_name,lg_abbrv,lg_lvl,numConf,numDiv,teamPerDiv,GP_div,GP_conf,GP_other,
+            sim_method,PO_team_div,PO_format,draft,num_draft_rounds} = req.body;
+
+        // const newFile = await pool.query(
+        //     "INSERT INTO world_file (file_name,active,file_date) VALUES ($1,True,'2024-09-01')",
+        //     [file_name]
+        // );
         // const newLeague = await pool.query(
         //     "INSERT INTO League (file_name,leagueName,LeagueAbrv,DivsPerConf,numConferences,numTeams,) VALUES ($1,$2,$3,$5,$4,$6)",
         //     [file_name,league_name,lg_abbrv,parseInt(numConf),parseInt(numDiv),parseInt(numConf)*parseInt(numDiv)*parseInt(teamPerDiv)]
@@ -44,6 +43,16 @@ app.get("/getFiles", async(req,res) => {
         res.status(500).send("Internal Server Error");
     }
 
+});
+
+app.get("/getActiveLeague", async(req,res) => {
+    try{
+        const league = await pool.query("SELECT league_id,NumConferences,DivsPerConf FROM League l, world_files f, WHERE f.active = true AND l.file_name = f.file_name");
+
+        res.json(league.rows);
+    }catch{
+
+    }
 });
 
 //Update

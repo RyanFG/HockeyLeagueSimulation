@@ -22,11 +22,33 @@ CREATE TABLE League(
     NumGP_vs_Conf int,
     NumGP_vs_Other int,
     SimMethod boolean,
+    PlayoffTeamsPerDiv int,
     PlayoffSeeding VARCHAR(50),
     HasDraft boolean,
     DraftRounds int,
     DevLeague SERIAL,
     FOREIGN KEY (DevLeague) REFERENCES League(league_id)
+);
+
+CREATE TABLE Conference (
+    Conf_id SERIAL PRIMARY KEY,
+    league_id SERIAL,
+    file_name VARCHAR(50),
+    FOREIGN KEY (league_id) REFERENCES League(league_id),
+    FOREIGN Key (file_name) REFERENCES world_file(file_name),
+    ConfName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Division (
+    Div_id SERIAL PRIMARY KEY,
+    league_id SERIAL,
+    file_name VARCHAR(50),
+    Conf_id SERIAL,
+    FOREIGN KEY (league_id) REFERENCES League(league_id),
+    FOREIGN KEY (file_name) REFERENCES world_file(file_name),
+    FOREIGN KEY (Conf_id) REFERENCES Conference(Conf_id),
+    DivName VARCHAR(50) NOT NULL,
+    NumTeams int
 );
 
 CREATE TABLE Team(
@@ -66,27 +88,6 @@ CREATE TABLE Player (
     contractYears int,
     contractSalary int,
     retired boolean
-);
-
-CREATE TABLE Conference (
-    Conf_id SERIAL PRIMARY KEY,
-    league_id SERIAL,
-    file_name VARCHAR(50),
-    FOREIGN KEY (league_id) REFERENCES League(league_id),
-    FOREIGN Key (file_name) REFERENCES world_file(file_name),
-    ConfName VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE Division (
-    Div_id SERIAL PRIMARY KEY,
-    league_id SERIAL,
-    file_name VARCHAR(50),
-    Conf_id SERIAL,
-    FOREIGN KEY (league_id) REFERENCES League(league_id),
-    FOREIGN KEY (file_name) REFERENCES world_file(file_name),
-    FOREIGN KEY (Conf_id) REFERENCES Conference(Conf_id),
-    DivName VARCHAR(50) NOT NULL,
-    NumTeams int
 );
 
 CREATE TABLE GameSched (

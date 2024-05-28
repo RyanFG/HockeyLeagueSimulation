@@ -21,7 +21,7 @@ function SaveFiles(){
             <Button
                 onClick={() => updateFile(files.active)}
                 variant="primary"
-                href="/gameHome"
+                href="/GameHome"
             >
                 SELECT FILE
             </Button>
