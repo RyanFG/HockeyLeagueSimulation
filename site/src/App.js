@@ -5,7 +5,7 @@ import Home from './components/pages/Home';
 import Creation from './components/pages/Creation';
 import SaveFiles from './components/pages/SaveFiles';
 import GameHome from './components/pages/GameHome';
-import ConfDivSetup from './components/pages/confDivSetup';
+import ConfDivSetup from './components/pages/ConfDivSetup';
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element ={<Home/>}/>
           <Route path="/Creation" element ={<Creation/>}/>
-          <Route path="/confDivSetup" element ={<ConfDivSetup/>}/>
+          <Route path="/ConfDivSetup" element ={<ConfDivSetup/>}/>
           <Route path="/SaveFiles" element ={<SaveFiles/>}/>
           <Route path="/GameHome" element ={<GameHome/>}/>
         </Routes>

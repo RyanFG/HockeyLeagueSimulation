@@ -6,7 +6,8 @@ import Col from 'react-bootstrap/Col';
 
 function Creation(){
     
-    const [boxToggle, setBoxToggle] = React.useState([{id:0, name:"hasDraft" ,status:true}])
+    const [boxToggle, setBoxToggle] = React.useState([{id:0, name:"hasDraft" ,status:true}]);
+
     const fileCreate = async(e) => {
         try{
             console.log(e.target.fileName.value);
@@ -41,7 +42,7 @@ function Creation(){
                 console.log('New File:', newFile);
             }else{
                 console.log("failed1");
-                console.error('Failed ot create file:', response.statusText);
+                console.error('Failed to create file:', response.statusText);
             }
         }catch(error){
             console.log("failed2");

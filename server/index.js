@@ -30,6 +30,21 @@ app.post("/createFile", async(req,res) => {
         console.error(err.message);
     }
 });
+
+app.post("createConf",async(req,res) => {
+    try{
+        const {leagueID,confName} = req.body;
+
+        const newConf = await pool.query(
+            "INSERT INTO Conference (league_id,confName) VALUES ($1,$2)",
+            [leagueID,confName]
+        );
+
+        res.json(newConf.rows[0]);
+    }catch(err){
+        console.err0r(err.message);
+    }
+});
 //Get
 app.get("/getFiles", async(req,res) => {
     try{
