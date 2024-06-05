@@ -20,6 +20,7 @@ function ConfDivSetup(){
         league_id: 0,
         numConferences: 2,
         DivsPerConf: 2,
+        NumTeams: 32
     };
 
     const disableBtn = (event,id) => {
@@ -133,6 +134,9 @@ function ConfDivSetup(){
                 <Form>
                     {showConf(league)}
                 </Form>
+                <Button href="/CreateTeams" style={{position:'absolute',marginTop:'1.5%'}} type="submit" variant="primary" size="lg">
+                    Create Teams
+                </Button>
             </div>
         </Row>
         </div>

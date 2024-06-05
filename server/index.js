@@ -36,13 +36,13 @@ app.post("createConf",async(req,res) => {
         const {leagueID,confName} = req.body;
 
         const newConf = await pool.query(
-            "INSERT INTO Conference (league_id,confName) VALUES ($1,$2)",
+            "INSERT INTO Conference (league_id,ConfName) VALUES ($1,$2)",
             [leagueID,confName]
         );
 
         res.json(newConf.rows[0]);
     }catch(err){
-        console.err0r(err.message);
+        console.error(err.message);
     }
 });
 //Get
@@ -62,11 +62,34 @@ app.get("/getFiles", async(req,res) => {
 
 app.get("/getActiveLeague", async(req,res) => {
     try{
-        const league = await pool.query("SELECT league_id,NumConferences,DivsPerConf FROM League l, world_files f, WHERE f.active = true AND l.file_name = f.file_name");
+        const league = await pool.query("SELECT league_id,NumConferences,DivsPerConf,NumTeams FROM League l, world_files f, WHERE f.active = true AND l.file_name = f.file_name");
 
         res.json(league.rows);
     }catch{
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
+app.get("/getActiveConf", async(req,res) => {
+    try{
+        const confs = await pool.query("SELECT Conf_id,ConfName FROM Conference c, League l, world_files f, WHERE f.active = true AND l.file_name = f.file_name AND c.league_id = l.league_id");
+
+        res.json(confs.rows);
+    }catch{
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+app.get("/getActiveDiv", async(req,res) => {
+    try{
+        const confs = await pool.query("SELECT div_id,Conf_id,DivName FROM Division d, League l, world_files f, WHERE f.active = true AND l.file_name = f.file_name AND d.league_id = l.league_id");
+
+        res.json(confs.rows);
+    }catch{
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
     }
 });
 
