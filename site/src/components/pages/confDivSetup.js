@@ -18,6 +18,7 @@ function ConfDivSetup(){
 
     const league = {
         league_id: 0,
+        leagueName: "NHL",
         numConferences: 2,
         DivsPerConf: 2,
         NumTeams: 32
@@ -77,6 +78,7 @@ function ConfDivSetup(){
             divs.push(j+1);
         };
         console.log(confs,divs);
+
         return confs.map((id1) => {
             return <Form onSubmit={createConf}>
                 <Row style={{paddingTop:'1%', fontSize:'125%', fontFamily:'Rockwell'}}>
@@ -124,11 +126,11 @@ function ConfDivSetup(){
         <Row>
             <Col className="text-center" style={{position:'absolute', fontSize:'275%', fontFamily:'Rockwell', paddingTop:'2%'}}>    
                 <div>
-                    Conference and Division Setup
+                    {league.leagueName} Conference and Division Setup
                 </div>  
             </Col>
-
         </Row>
+
         <Row style={{paddingLeft:'4%', paddingTop:'5%'}}>
             <div className="down3">
                 <Form>
