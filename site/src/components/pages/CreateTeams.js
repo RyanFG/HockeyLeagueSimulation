@@ -5,6 +5,9 @@ import Col from 'react-bootstrap/Col';
 import { Form } from "react-bootstrap";
 
 function CreateTeams(){
+    const firstNames = [];
+    const lastNames = [];
+
 
     // const [league, setLeague] = useState([]);
     // const [conf, setConf] = useState([]);
@@ -113,7 +116,7 @@ function CreateTeams(){
 
     function createT(teams,d,league){
         return teams.map((t) => {
-            return <Form onSubmit={createQuery}>
+            return <Form onSubmit={createTeamQuery}>
                 <Row style={{}}>
                     <Col xs={2}>
                         <Form.Label>Team #{t} City</Form.Label>
@@ -133,9 +136,73 @@ function CreateTeams(){
         });
     };
 
-    const createQuery = async(e) => {
+    const createTeamQuery = async(e) => {
 
     };
+
+    const createPlayerQuery = async(e) => {
+
+    };
+
+    function createTeamPlayers(){
+        for(let i=0; i < parseInt(league.NumTeams); i++){
+            for(let LW=0; LW < 5; LW++){
+                createPlayer("LW",);
+            }
+            for(let C=0; C < 5; C++){
+                createPlayer("C");
+            }
+            for(let RW=0; RW < 5; RW++){
+                createPlayer("RW");
+            }
+            for(let LD=0; LD < 4; LD++){
+                createPlayer("LD");
+            }
+            for(let RD=0; RD < 4; RD++){
+                createPlayer("RD");
+            }
+            for(let G=0; G < 3; G++){
+                createPlayer("G");
+            }
+        }
+    }
+
+    function createPlayer(pos){
+        const player = {
+            position: pos,
+            firstName: firstNames[randomInt(0,firstNames.length-1)],
+            lastName: lastNames[randomInt(0,lastNames.length-1)],
+            age: randomInt(18,35),
+            rating: randomInt(65,95),
+            salary: 0,
+            years: randomInt(1,5)
+        };
+    
+        if(player.rating < 80 || player.age <= 22){
+            player.salary = 750000;
+            player.years = 2;
+            if(player.years <= 20){
+                player.years = 3;
+            }
+        }else if(player.rating > 79 && player.rating < 82){
+            player.salary = 1500000;
+        }else if(player.rating > 81 && player.rating < 85){
+            player.salary = 3000000;
+        }else if(player.rating > 84 && player.rating < 87){
+            player.salary = 5000000;
+        }else if(player.rating > 86 && player.rating < 90){
+            player.salary = 8000000;
+        }else{
+            player.salary = 10500000;
+        }
+        createPlayerQuery
+    }
+
+    function randomInt(min,max){
+        const minCeil = Math.ceil(min);
+        const maxFloor = Math.floor(max);
+        return Math.floor(Math.random()*(maxFloor-minCeil +1) + minCeil);
+    }
 
     return(
         <div>
@@ -151,6 +218,11 @@ function CreateTeams(){
                     <div>
                         {confShow(league,conf,div)}
                     </div>  
+                </Col>
+                <Col>
+                    <Button style={{position:'absolute',marginTop:'1.5%'}} onclick={createTeamPlayers()} variant="primary" size="lg">
+                        Complete Team Creation
+                    </Button>
                 </Col>
             </Row>
         </div>

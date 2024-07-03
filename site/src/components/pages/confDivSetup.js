@@ -112,7 +112,7 @@ function ConfDivSetup(){
                         <Form.Control type="text" name="divName" placeholder="Enter Division Name"/>
                     </Col>
                     <Col>
-                        <Button style={{position:'absolute',marginTop:'1.5%'}} type="submit" variant="primary" size="lg" onClick={(e) => disableDivBtn(e)} disabled={divBtn[id1-1]}>
+                        <Button style={{position:'absolute',marginTop:'1.5%'}} type="submit" variant="primary" size="lg" onClick={(e) => disableDivBtn(e)} disabled={divBtn[id1-1].dis}>
                             Confirm
                         </Button>
                     </Col>
