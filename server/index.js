@@ -45,6 +45,21 @@ app.post("createConf",async(req,res) => {
         console.error(err.message);
     }
 });
+
+app.post("createDiv", async(req,res) => {
+    try{
+        const {leagueID,divName,confID,numTeams} = req.body;
+
+        const newDiv = await pool.query(
+            "INSERT INTO Division (league_id,DivName,numTeams,Conf_id) VALUES ($1,$2,$4,$3)",
+            [leagueID,divName,confID,numTeams]
+        );
+
+        res.json(newDiv.rows[0]);
+    }catch(err){
+        console.error(err.message);
+    }
+});
 //Get
 app.get("/getFiles", async(req,res) => {
     try{

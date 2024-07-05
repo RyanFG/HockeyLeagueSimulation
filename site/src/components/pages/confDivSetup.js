@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 function ConfDivSetup(){
 
     // const [league, setLeague] = useState([]);
+    // const [conf, setConf] = useState([]);
     const [divBtn,setDivBtn] = useState([{id:1,dis:true},{id:2,dis:true}]);
 
     // useEffect(() => {
@@ -16,13 +17,32 @@ function ConfDivSetup(){
     //     .then((data) => setLeague({active: data}));
     // }, [league]);
 
-    const league = {
-        league_id: 0,
-        leagueName: "NHL",
-        numConferences: 2,
-        DivsPerConf: 2,
-        NumTeams: 32
-    };
+    // useEffect(() => {
+    //     fetch("http://localhost:3001/getActiveConf")
+    //     .then((response) => response.json())
+    //     .then((data) => setConf({active: data}));
+    // }, [conf]);
+
+    const league = [
+        {
+         league_id: 0,
+         leagueName: "NHL",
+         numConferences: 2,
+         DivsPerConf: 2,
+         NumTeams: 32
+     }
+     ];
+
+    const conf = [
+        {
+        Conf_id:0,
+        ConfName: "East"
+    },
+        {
+        Conf_id:1,
+        ConfName: "West"
+    }
+    ];
 
     const disableBtn = (event,id) => {
         event.currentTarget.disabled = true;
@@ -43,7 +63,7 @@ function ConfDivSetup(){
             e.preventDefault();
 
             const data = {
-                leagueID: league.league_id.valueOf(),
+                leagueID: league[0].league_id.valueOf(),
                 confName: e.confName.value
             };
 
@@ -68,13 +88,52 @@ function ConfDivSetup(){
         };
     };
 
+    createDiv = async (e) => {
+        try{
+            e.preventDefault();
+
+            const conf_id = 0;
+            for(let i=0;i < conf.length;i++){
+                if(conf[i].ConfName == e.ConfName.value){
+                    conf_id = conf[i].Conf_id;
+                }
+            }
+
+            const data = {
+                leagueID: league[0].league_id.valueOf(),
+                divName: e.divName.value,
+                confID: conf_id,
+                numTeams: ((league[0].NumTeams)/(league[0].DivsPerConf*league[0].numConferences)).valueOf()
+            };
+
+            console.log(data);
+
+            const response = await fetch('http://localhost:3001/createDiv', {
+                method: 'POST',
+                headers:{'Content-Type': 'application/json'},
+                body: JSON.stringify(data),
+            });
+            if(response.ok){
+                const newDiv = await response.json();
+                console.log('New Division:', newDiv);
+            }else{
+                console.log("failed1");
+                console.error('Failed to create division:', response.statusText);
+            }
+        }
+        catch(err){
+            console.log("failed2");
+            console.error('Error creating division:', err.message);
+        }
+    }
+
     function showConf(league){
         const confs = [];
         const divs = [];
-        for(let i=0; i < parseInt(league.numConferences); i++){
+        for(let i=0; i < parseInt(league[0].numConferences); i++){
             confs.push(i+1); 
         };
-        for(let j=0; j < parseInt(league.DivsPerConf); j++){
+        for(let j=0; j < parseInt(league[0].DivsPerConf); j++){
             divs.push(j+1);
         };
         console.log(confs,divs);
@@ -105,7 +164,7 @@ function ConfDivSetup(){
 
     function showDiv(divs,id1){
         return divs.map((id2) => {
-            return <Form style={{paddingTop:'1%',paddingLeft:'5%', fontSize:'100%', fontFamily:'Rockwell'}}>
+            return <Form style={{paddingTop:'1%',paddingLeft:'5%', fontSize:'100%', fontFamily:'Rockwell'}} onSubmit={createDiv}>
                 <Row>
                     <Col>
                         <Form.Label>Division #{id2} Name</Form.Label>
