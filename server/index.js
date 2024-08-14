@@ -31,7 +31,7 @@ app.post("/createFile", async(req,res) => {
     }
 });
 
-app.post("createConf",async(req,res) => {
+app.post("/createConf",async(req,res) => {
     try{
         const {leagueID,confName} = req.body;
 
@@ -46,7 +46,7 @@ app.post("createConf",async(req,res) => {
     }
 });
 
-app.post("createDiv", async(req,res) => {
+app.post("/createDiv", async(req,res) => {
     try{
         const {leagueID,divName,confID,numTeams} = req.body;
 
@@ -122,6 +122,23 @@ app.put("/something/:id", async (req,res) => {
         
             res.json("something updated");
     }catch (err){
+        console.error(err.message);
+    }
+});
+
+app.put("/world_files/:file_name", async (req,res) => {
+    try{
+        const{file_name} = req.params;
+
+        const setAllInactive = await pool.query(
+            "UPDATE world_file SET active = False"
+        );
+        const setActive = await pool.query(
+             "UPDATE world_file SET active = True WHERE file_name = $1",
+             [file_name]
+         );
+        res.json("Updated File to Active")
+    }catch(err){
         console.error(err.message);
     }
 })

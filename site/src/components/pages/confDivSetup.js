@@ -88,7 +88,7 @@ function ConfDivSetup(){
         };
     };
 
-    createDiv = async (e) => {
+    const createDiv = async (e) => {
         try{
             e.preventDefault();
 

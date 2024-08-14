@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
 function SaveFiles(){
 
@@ -15,22 +16,27 @@ function SaveFiles(){
     }, [fileInfo]);
 
     const showFiles = (files) => {
-        return (<tr>
+        return (
+        
+        <tr>
             <th scope="row">{files.file_name}</th>
             <td>{files.file_date.slice(0,10)}</td>
             <Button
-                onClick={() => updateFile(files.active)}
                 variant="primary"
+                onClick={() => setFileActive(files.file_name)}
                 href="/GameHome"
             >
                 SELECT FILE
             </Button>
-        </tr>);
+        </tr>
+        
+        );
     };
 
-    const updateFile = async(file_active) => {
+    const setFileActive = async(file_name) => {
+        console.log(file_name);
         try{
-            const response = await fetch(`http://localhost:3001/world_files/${file_active}`,{
+            const response = await fetch(`http://localhost:3001/world_files/${file_name}`,{
                 method:'PUT',
                 headers:{'Content-Type':'application/json',},
                 body: JSON.stringify({}),

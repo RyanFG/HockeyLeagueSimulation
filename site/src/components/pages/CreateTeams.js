@@ -252,7 +252,7 @@ function CreateTeams(){
         }else{
             player.salary = 10500000;
         }
-        (createPlayerQuery)
+        (createPlayerQuery())
     }
 
     function randomInt(min,max){
