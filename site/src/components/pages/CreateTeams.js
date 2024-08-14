@@ -127,6 +127,10 @@ function CreateTeams(){
                         <Form.Label>Team #{t} Nickname</Form.Label>
                         <Form.Control type="text" name="nickname" placeholder="Enter Nickname"/>
                     </Col>
+                    <Col xs={2}>
+                        <Form.Label>Team #{t} Abbreaviation</Form.Label>
+                        <Form.Control type="text" name="abbreaviation" placeholder="Enter Abbreaviation"/>
+                    </Col>
                     <Col>
                         <Button style={{position:'absolute',marginTop:'1.5%'}} variant="primary" size="lg">
                             Confirm
@@ -138,38 +142,90 @@ function CreateTeams(){
     };
 
     const createTeamQuery = async(e) => {
+        try{
+            e.preventDefault();
 
+            const data = {
+                div_id: e.d.div_id.valueOf(),
+                conf_id: e.d.Conf_id.valueOf(),
+                nickname: e.nickname.value,
+                city: e.cityName.value,
+                abbreaviation: e.abbreaviation.value,
+                year_founded: "2024"
+            };
+
+            console.log(data);
+
+            const response = await fetch('http://localhost:3001/createTeam', {
+                method: 'POST',
+                headers:{'Content-Type': 'application/json'},
+                body: JSON.stringify(data),
+            });
+            if(response.ok){
+                const newTeam = await response.json();
+                console.log("New Team:", newTeam);
+            }else{
+                console.log("failed1");
+                console.error("failed to create team:", response.statusText);
+            }
+        }catch(err){
+            console.log("failed2");
+            console.error("Error creating team:", err.message);
+        }
     };
 
     const createPlayerQuery = async(e) => {
+        try{
+            e.preventDefault();
 
+            const data = e.player;
+            console.log(data);
+
+            const response = await fetch('http://localhost:3001/createPlayer', {
+                method: 'POST',
+                headers:{'Content-Type': 'application/json'},
+                body: JSON.stringify(data),
+            });
+            if(response.ok){
+                const newPlayer = await response.json();
+                console.log('New Player:', newPlayer);
+            }else{
+                console.log("failed1");
+                console.error('Failed to create player:', response.statusText);
+            }
+        }catch(err){
+            console.log("failed2");
+            console.error('Failed to create player:',err.message);
+        }
     };
 
     function createTeamPlayers(){
         for(let i=0; i < parseInt(league.NumTeams); i++){
+            const team_id = i;  /// Comment out or delete after get active teams is created
             for(let LW=0; LW < 5; LW++){
-                createPlayer("LW",);
+                createPlayer("LW",team_id);
             }
             for(let C=0; C < 5; C++){
-                createPlayer("C");
+                createPlayer("C",team_id);
             }
             for(let RW=0; RW < 5; RW++){
-                createPlayer("RW");
+                createPlayer("RW",team_id);
             }
             for(let LD=0; LD < 4; LD++){
-                createPlayer("LD");
+                createPlayer("LD",team_id);
             }
             for(let RD=0; RD < 4; RD++){
-                createPlayer("RD");
+                createPlayer("RD",team_id);
             }
             for(let G=0; G < 3; G++){
-                createPlayer("G");
+                createPlayer("G",team_id);
             }
         }
     }
 
-    function createPlayer(pos){
+    function createPlayer(pos,id){
         const player = {
+            t_id: id,
             position: pos,
             firstName: firstNames[randomInt(0,firstNames.length-1)],
             lastName: lastNames[randomInt(0,lastNames.length-1)],
@@ -196,7 +252,7 @@ function CreateTeams(){
         }else{
             player.salary = 10500000;
         }
-        createPlayerQuery
+        (createPlayerQuery)
     }
 
     function randomInt(min,max){

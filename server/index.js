@@ -109,8 +109,36 @@ app.get("/getActiveDiv", async(req,res) => {
 });
 
 //Update
+// Basic Update Query (example)
+app.put("/something/:id", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const {desc} = req.body;
 
+        const updateThing = await pool.query(
+            "UPDATE table SET desc = $1 WHERE table_id = $2",
+            [desc,id]
+            );
+        
+            res.json("something updated");
+    }catch (err){
+        console.error(err.message);
+    }
+})
 //Delete
+// Basic Delete Query (example)
+app.delete("/something/:id", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const deleteSomething = await pool.query(
+            "DELETE FROM table WHERE table_id = $1",
+            [id]
+        );
+        res.json("something deleted");
+    }catch(err){
+        console.error(err.message);
+    }
+})
 
 
 app.listen(3001, () => {
